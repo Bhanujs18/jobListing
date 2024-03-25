@@ -40,6 +40,7 @@ const Register = () => {
            <button className={styles.button} onClick={handleSubmit}>Create Account</button>
            <p>Already have an account? <NavLink to="/login"><span style={{color:'black' , textDecoration:'underline'}}>Sign In</span></NavLink></p>
            {/* {resgisterState ? <AlertBox/> : null} */}
+           <AlertBox />
         </div>
     </div>
   )

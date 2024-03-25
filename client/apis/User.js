@@ -16,7 +16,8 @@ export const loginUser = async (userLoginDetails) => {
     try {
         const reqUrl = `${backend}auth/login`;
         const res = await axios.post(reqUrl , userLoginDetails);
-        console.log(res);
+        const token = await res.data.token;
+        localStorage.setItem("token" , token);
     } catch (error) {
         console.log(error)
     }

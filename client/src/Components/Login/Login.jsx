@@ -19,10 +19,7 @@ const Login = () => {
     if(!data.email || !data.password){
       return alert("Empty Fields!!!")
     }
-    const res = await loginUser(data);
-    const token = res.data.token
-    console.log(token)
-    localStorage.setItem("token" , token);
+    await loginUser(data);
     }
 
   return (
