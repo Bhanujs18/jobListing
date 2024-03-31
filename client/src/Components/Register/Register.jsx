@@ -7,6 +7,7 @@ import AlertBox from '../Alert/Alert';
 const Register = () => {
 
   const[resgisterState , setRegisterState] = useState(false)
+  const[error, setError] = useState("Registration Failed!!")
     const [data , setData] = useState({
         name : "",
         email : "",
@@ -22,10 +23,15 @@ const Register = () => {
     const handleSubmit = async(e) => {
       e.preventDefault()
       if(!data.name || !data.email || !data.password || !data.mobile){
-        return alert("Field Missing!!")
+        setError("Field Missing!!!");
+        setRegisterState(true);
+          return
       }
         await createUser(data).then(()=>setRegisterState(true))
     }
+
+
+    setInterval(()=>setRegisterState(false) , 4000);
 
   return (
     <div className={styles.container}>
@@ -39,8 +45,8 @@ const Register = () => {
            <label className={styles.input}  for='mobile'><input id='mobile' type='checkbox' required /><p style={{fontSize:'0.8rem'}}>By creating an account, I agree to our terms of use and privacy policy</p></label> 
            <button className={styles.button} onClick={handleSubmit}>Create Account</button>
            <p>Already have an account? <NavLink to="/login"><span style={{color:'black' , textDecoration:'underline'}}>Sign In</span></NavLink></p>
-           {/* {resgisterState ? <AlertBox/> : null} */}
-           <AlertBox />
+           {resgisterState ?   <AlertBox  message={error} /> : null}
+         
         </div>
     </div>
   )

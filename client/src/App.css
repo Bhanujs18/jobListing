@@ -1,0 +1,13 @@
+.textImage{
+    position: relative;
+    background-color: aqua;
+}
+
+.imageText{
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: white;
+}

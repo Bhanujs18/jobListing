@@ -1,0 +1,106 @@
+.companyIcon{
+    width: 2rem;
+    height: 2rem;
+
+}
+
+.searchIcon{
+    width: 2rem;
+}
+
+.box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    flex-wrap: wrap;
+    padding: 1rem 2rem;
+    box-shadow: rgb(237, 83, 83) 0px 1px 7px;
+}
+
+.leftSection{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.titleAndSalary{
+    display: flex;
+    flex-direction:column;
+    width: 10rem;
+    justify-content: center;
+}
+
+.searchBox{
+    border: 1px grey solid;
+    width: 70%;
+    display: flex;
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+}
+
+.flag{
+    height: 2rem;
+    width: 2.2rem;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: end;
+}
+
+.rightSection{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: end;
+gap: 1rem;
+    :nth-child(1){
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+.location{
+    display:flex; 
+    gap: 1rem;
+    justify-content: start;
+    color: #ed5353;
+}
+
+.leftSectionDiv{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.skills{
+    display: flex;
+    justify-content: end;
+}
+
+.skill{
+    display: flex;
+    align-items: center;
+    width: 5rem;
+    height: 1.7rem;
+    text-transform: capitalize;
+    justify-content: center;
+    padding: 0.3rem;
+    background-color: #ffeeee;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    padding: 0.2rem 0rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    text-transform: capitalize;
+    align-items: center;
+}

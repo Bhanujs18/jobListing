@@ -9,3 +9,31 @@ body{
   font-weight: 400;
   font-style: normal;
 }
+
+
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ed5353;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  width: 9rem;
+  padding: 0.3rem 1.2rem;
+}
+
+.wbutton{
+  background-color: white;
+  border: none;
+ width: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ed5353;
+  border: 2px #ed5353 solid;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  padding: 0.3rem 1.2rem;
+}

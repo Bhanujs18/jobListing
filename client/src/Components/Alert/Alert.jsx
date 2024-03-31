@@ -1,12 +1,13 @@
-import Alert from 'react-bootstrap/Alert';
 import styles from '../Alert/Alert.module.css';
 
-const  AlertBox = () => {
+const  AlertBox = ({message}) => {
+
     return (
-      <Alert className={styles.container}  onClose={() => setShow(false)} dismissible>
-        <Alert.Heading className={styles.heading}>Oh snap! You got an error!</Alert.Heading>
-      </Alert>
+      <div className={styles.container}  onClose={() => setShow(false)} dismissible>
+        <div className={styles.heading}>{message} <button className={styles.button} onClick={()=>setTimer(false)}>close</button></div>
+      </div>
     );
   }
+
 
 export default AlertBox;
