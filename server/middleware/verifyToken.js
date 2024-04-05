@@ -16,4 +16,8 @@ try {
 }
 }
 
-module.exports = verifyToken;
+
+
+
+
+module.exports = {verifyToken};

@@ -38,6 +38,18 @@ const jobSchema = new mongoose.Schema(
             type: Array,
             required: true,
         },
+        jobType:{
+            type: String,
+            required: true,
+        },
+        about:{
+            type: String,
+            required: true,
+        },
+        information:{
+            type: String,
+            required: true,
+        },
         refUserId: {
             type: mongoose.ObjectId,
         },

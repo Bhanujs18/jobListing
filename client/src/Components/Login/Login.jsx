@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from "./Login.module.css"
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import { loginUser } from '../../../apis/User';
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
     const [data , setData] = useState({
         email : "",
@@ -19,7 +21,9 @@ const Login = () => {
     if(!data.email || !data.password){
       return alert("Empty Fields!!!")
     }
-    await loginUser(data);
+    const res =  await loginUser(data);
+    console.log(res)
+    navigate("/");
     }
 
   return (

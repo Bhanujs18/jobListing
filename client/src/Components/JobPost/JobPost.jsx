@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import styles from "./JobPost.module.css";
+import { createJob, updateJobById } from "../../../apis/Job";
+import { NavLink, useLocation } from "react-router-dom";
 
 const JobPost = () => {
+  const {state} = useLocation();
+  const [jobDetails , setJobDetails] = useState(state?.jobDetails);
   const [data, setData] = useState({
-    companyName: "",
-    title: "",
-    description: "",
-    logoUrl: "",
-    salary: "",
-    location: "",
-    locationType: "",
-    skills: "",
-    jobType: "",
-    information: "",
-    about: "",
+    companyName: "" || jobDetails?.companyName,
+    title: "" || jobDetails?.title,
+    description: "" || jobDetails?.description,
+    logoUrl: "" || jobDetails?.logoUrl,
+    duration : "" || jobDetails?.duration,
+    salary: "" || jobDetails?.salary,
+    location: "" || jobDetails?.location,
+    locationType: "" || jobDetails?.locationType,
+    skills: jobDetails?.skills || [],
+    jobType: "" || jobDetails?.jobType,
+    information: "" || jobDetails?.information,
+    about: "" || jobDetails?.about,
   });
+
 
   const handleData = (e) => {
     e.preventDefault();
@@ -22,23 +28,48 @@ const JobPost = () => {
   };
 
   const handleSubmit = async (e) => {
+
+    if(state?.edit){
+      await updateJobById(jobDetails._id , data)
+      return;
+    }
+
     e.preventDefault();
-    if (
-      !companyName ||
-      !title ||
-      !description ||
-      !logoUrl ||
-      !salary ||
-      !location ||
-      !locationType ||
-      !skills ||
-      !jobType ||
-      !information ||
-      !about
+    if (!data.companyName ||
+      !data.title ||
+      !data.description ||
+      !data.logoUrl ||
+      !data.salary ||
+      !data.duration ||
+      !data.location ||
+      !data.locationType ||
+      !data.skills ||
+      !data.jobType ||
+      !data.information ||
+      !data.about
     ) {
       return alert("Fill All Fields!!");
     }
+
+    await createJob(data);
   };
+
+const addSkills = (e) => {
+e.preventDefault();
+ const filteredskill =  data.skills.filter((skill) => skill===e.target.value);
+ if(!filteredskill.length){
+  setData({...data , skills:[...data.skills , e.target.value]})
+ }
+
+}
+
+const removeSkill = (cur) => {;
+  console.log(cur)
+   const filteredskill =  data.skills.filter((skill) => skill!==cur);
+   console.log(filteredskill)
+    setData({...data , skills: filteredskill})  
+  }
+
 
   return (
     <div className={styles.container}>
@@ -71,6 +102,19 @@ const JobPost = () => {
           />
         </div>
         <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="logoUrl">
+            Duration
+          </label>
+          <input
+            className={styles.input}
+            type="text"
+            name="duration"
+            onChange={handleData}
+            value={data.duration}
+            placeholder="Enter duration"
+          />
+        </div>
+        <div className={styles.formGroup}>
           <label className={styles.label} htmlFor="title">
             Job Position
           </label>
@@ -95,18 +139,18 @@ const JobPost = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Job Type</label>
-          <select>
-            <option className={styles.options}>Remote</option>
-            <option className={styles.options}>Office</option>
+          <label className={styles.label}  htmlFor="jobType">Job Type</label>
+          <select  value={data.jobType} name="jobType"  onChange={handleData}>
+            <option value="Full-time" className={styles.options} selected>Full-time</option>
+            <option value="Part-time" className={styles.options}>Part-time</option>
           </select>
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>Remote/Office</label>
-          <select>
-            <option className={styles.options}>Remote</option>
-            <option className={styles.options}>Office</option>
+          <label className={styles.label} htmlFor="locationType">Remote/Office</label>
+          <select value={data.locationType}  name="locationType"   onChange={handleData} >
+            <option  value="Remote" className={styles.options} selected>Remote</option>
+            <option  value="Office" className={styles.options}>Office</option>
           </select>
         </div>
 
@@ -144,14 +188,28 @@ const JobPost = () => {
           />{" "}
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Skills Required</label>
-          <input
-            className={styles.input}
+          <label className={styles.label} htmlFor="skills">Skills Required</label>
+          <select   className={styles.input}
             type="text"
+            onChange={addSkills}
             name="skills"
-            placeholder="Enter the must have skills"
-          />{" "}
+            placeholder="Enter the must have skills">
+              <option selected hidden>Select your skills</option>
+            <option value="React">React</option>
+            <option value="Express">Express</option>
+            <option value="Redux">Redux</option>
+            <option value="Tailwind">Tailwind</option>
+            <option value="Next">Next</option>
+          </select>
         </div>
+        <div className={styles.skills}>
+                 {data.skills && data.skills.map((cur)=>{
+              return (
+                 <div className={styles.skill}>{cur}<img style={{cursor:"pointer"}} onClick={()=>removeSkill(cur)} width="16" height="16" src="https://img.icons8.com/emoji/48/cross-mark-emoji.png" alt="cross-mark-emoji"/></div>
+              )
+        }) }
+        </div>
+ 
         <div className={styles.formGroup}>
           <label className={styles.label}>Information</label>
           <input
@@ -164,12 +222,13 @@ const JobPost = () => {
           />{" "}
         </div>
         <div className={styles.buttons}>
-          <button className={styles.button}>Cancel</button>
+         <NavLink to={"/"}><button className={styles.button}>Cancel</button></NavLink> 
           <button
             className={styles.button}
+            onClick={handleSubmit}
             style={{ background: "#ed5353", border: "none", color: "white" }}
           >
-            + Add Job
+            {state?.edit ? <>Edit Job</> :  <>+Add Job</>}
           </button>
         </div>
       </div>

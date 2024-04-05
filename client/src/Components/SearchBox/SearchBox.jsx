@@ -7,6 +7,7 @@ import Card from "../Card/Card";
 const SearchBox = () => {
 
     const [jobs , setJobs] = useState()
+    const [isLogin] = useState(localStorage.getItem("token"));
 
     const fetchAllJobs = async () => {
      const data = await allJobs();
@@ -45,7 +46,7 @@ const SearchBox = () => {
                 <option>Next</option>
               </select>
           </div>
-          <NavLink to={"/jobpost"} style={{textDecoration:'none'}}><button className="button">+ Add Job</button></NavLink>
+           {isLogin ?  <NavLink to={"/jobpost"} style={{textDecoration:'none'}}><button className="button">+ Add Job</button></NavLink> : null}
         </div>
       </div>
              {jobs && jobs.map((cur)=> {

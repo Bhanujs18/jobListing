@@ -6,6 +6,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import JobPostPage from './Pages/JobPostPage/JobPostPage';
 import "./App.css"
+import JobDetailsPage from './Pages/JobDetailsPage/JobDetailsPage';
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
         <Route path='/register' element={<RegisterPage /> } />
         <Route path='/login' element={<LoginPage /> } />
         <Route path='/jobpost' element={<JobPostPage /> } />
-
+        <Route path='/jobDetails/:id' element={<JobDetailsPage /> } />
       </Routes>
       </BrowserRouter>
     </div>

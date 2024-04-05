@@ -1,4 +1,6 @@
+const { decodeUserId } = require("../middleware/verifyToken");
 const Job = require("../models/job");
+const { ObjectId } = require("mongoose");
 
 const allJobs = async (req, res , next) => {
   try {
@@ -22,14 +24,17 @@ const createJob = async (req, res , next) => {
       location,
       locationType,
       skills,
+      jobType,
+      information,
+      about,
       refUserId,
     } = req.body;
 
-    if (
-      (!companyName || !title || !description || !logoUrl || !duration,
-      !salary || !location || !locationType || !skills)
-    ) {
-      return res.status(401).json({ message: "Bad Request!" });
+    if (!companyName || !title || !description || !logoUrl || !duration ||
+      !salary || !location || !locationType || !skills ||  !jobType ||
+      !information || !about)
+     {
+      return res.status(401).json({ message: "Fields are empty!" });
     }
     const userId = req.userId;
 
@@ -43,6 +48,9 @@ const createJob = async (req, res , next) => {
       location,
       locationType,
       skills,
+      jobType,
+      information,
+      about,
       refUserId: userId,
     });
     await jobDetails.save();
@@ -55,14 +63,22 @@ const createJob = async (req, res , next) => {
 const getJobDetailsById = async (req, res , next) => {
   try {
     const jobId = req.params.jobId;
-
+    const userId =  req.userId; 
+ 
     const isJobExist = await Job.findById(jobId);
 
     if (!isJobExist) {
       return res.status(404).json({ message: "Nothing Found!!" });
     }
 
-    res.status(200).json({ data: isJobExist });
+    let isEditable = false;
+    if(userId){
+      const user = new ObjectId(userId)
+      if(isJobExist.refUserId.equals(user)){
+        isEditable = true;
+            }
+    }
+    res.status(200).json({ data: {isJobExist} , isEditable });
   } catch (error) {
     next(error);
   }
@@ -75,11 +91,14 @@ const updateJobById = async (req, res , next) => {
       title,
       description,
       logoUrl,
-      salary,
       duration,
+      salary,
       location,
       locationType,
       skills,
+      jobType,
+      information,
+      about,
       refUserId
     } = req.body;
 
@@ -99,7 +118,10 @@ const updateJobById = async (req, res , next) => {
       !salary ||
       !location ||
       !locationType ||
-      !skills
+      !skills ||
+      !jobType ||
+      !information ||
+      !about
     ) {
       return res.status(401).json({ message: "Bad Request!" });
     }
@@ -117,6 +139,9 @@ const updateJobById = async (req, res , next) => {
         location,
         locationType,
         skills,
+        jobType,
+        information,
+        about,
         }
       }
     )

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jobController = require('../controller/Job');
-const verifyToken = require('../middleware/verifyToken');
+const {verifyToken} = require('../middleware/verifyToken');
 
 router.post("/create" , verifyToken , jobController.createJob);
 router.get("/jobDetails/:jobId"   , jobController.getJobDetailsById);

@@ -57,7 +57,7 @@ const loginUser = async (req, res) => {
   }
 
   const token =  jwt.sign({userId : isExist._id} , process.env.SECRET_CODE , {expiresIn : "60h"})
-  res.status(200).json({message : "User Logged in Succesfully!! " , token : token , name: isExist.name})
+  res.status(200).json({message : "User Logged in Succesfully!! " , token : token , id: isExist._id})
 
     
 }
@@ -70,4 +70,22 @@ catch(err){
 }
 
 
-module.exports = { registerUser , loginUser};
+const getUserDetails = async (req , res) => {
+  try{
+const id = req.params.id;
+const isExist = await User.findOne({ _id : id });
+if(isExist){
+  return res.status(200).json({data : isExist})
+}
+return res.status(500).json({
+  message: "No data Found",
+});
+  }catch(err){
+    return res.status(500).json({
+      message: "Server Issue",
+    });
+} 
+  }
+
+
+module.exports = { registerUser , loginUser , getUserDetails};
